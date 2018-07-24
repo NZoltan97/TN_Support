@@ -1,19 +1,12 @@
 package com.tnsupport.dtos;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter @AllArgsConstructor
 public class AttributeName {
 	
 	private String siteIDAtt;
-
-	public void setIsCorrect(String siteIDAtt) {
-		this.siteIDAtt = siteIDAtt;
-	}
-
-	public AttributeName(String siteIDAtt) {
-		this.siteIDAtt = siteIDAtt;
-	}
-
-	public String getsiteIDAtt() {
-		return siteIDAtt;
-	}
 	
 }

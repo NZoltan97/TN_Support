@@ -7,21 +7,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tnsupport.controllers.RequestController.IRequestController;
 import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.InnerDTO;
+import com.tnsupport.model.SiteData;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
+import com.tnsupport.services.RestTemplateService.impl.RestTemplateServiceImpl;
 
 @RestController
-public class RequestControllerImpl {
-	@Autowired
-	MainServiceImpl service;
+public class RequestControllerImpl implements IRequestController {
 	
+	@Autowired
+	MainServiceImpl mainService;
+	
+	@Autowired
+	RestTemplateServiceImpl restService;
 	
 	@RequestMapping(value = "/sendSiteID", method = RequestMethod.GET , produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendSiteID(@RequestParam ("hostName") String hostName, @RequestParam ("siteIDAtt") String siteIDAtt) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteID(54321);
-		return service.saveSite(innerDto);
+		return mainService.saveSite(innerDto);
+	}
+	
+	@RequestMapping(value = "/sendSiteData", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<SiteData> sendSiteData() {
 		
+		return restService.getSiteData();
 	}
 }
