@@ -2,18 +2,18 @@ package com.tnsupport.dtos;
 
 public class AttributeName {
 	
-	private String isCorrect;
+	private String siteIDAtt;
 
-	public void setIsCorrect(String isCorrect) {
-		this.isCorrect = isCorrect;
+	public void setIsCorrect(String siteIDAtt) {
+		this.siteIDAtt = siteIDAtt;
 	}
 
-	public AttributeName(String isCorrect) {
-		this.isCorrect = isCorrect;
+	public AttributeName(String siteIDAtt) {
+		this.siteIDAtt = siteIDAtt;
 	}
 
-	public String getIsCorrect() {
-		return isCorrect;
+	public String getsiteIDAtt() {
+		return siteIDAtt;
 	}
 	
 }
