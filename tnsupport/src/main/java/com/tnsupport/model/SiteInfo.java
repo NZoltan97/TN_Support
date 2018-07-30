@@ -9,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter @Setter
+@Data @NoArgsConstructor
 @Table(name = "sites")
 public class SiteInfo implements Serializable {
 
@@ -24,7 +26,17 @@ public class SiteInfo implements Serializable {
 	@Column(name = "auto_id")
 	private long auto_id;
 
+	@JsonProperty("id")
 	@Column(name = "siteID")
 	private long siteID;
+	
+	@Column(name = "siteName")
+	private String siteName;
+	
+	@Column(name = "siteAddress")
+	private String siteAddress;
+	
+	@Column(name = "currency")
+	private String currency;
 	
 }

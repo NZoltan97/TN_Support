@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tnsupport.controllers.RequestController.IRequestController;
 import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.InnerDTO;
-import com.tnsupport.model.SiteData;
+import com.tnsupport.model.SiteInfo;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
 import com.tnsupport.services.RestTemplateService.impl.RestTemplateServiceImpl;
 
@@ -20,9 +20,6 @@ public class RequestControllerImpl implements IRequestController {
 	@Autowired
 	MainServiceImpl mainService;
 	
-	@Autowired
-	RestTemplateServiceImpl restService;
-	
 	@RequestMapping(value = "/sendSiteID", method = RequestMethod.GET , produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendSiteID(@RequestParam ("hostName") String hostName, @RequestParam ("siteIDAtt") String siteIDAtt) {
 		InnerDTO innerDto = new InnerDTO();
@@ -31,8 +28,9 @@ public class RequestControllerImpl implements IRequestController {
 	}
 	
 	@RequestMapping(value = "/sendSiteData", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<SiteData> sendSiteData() {
+	public SiteInfo sendSiteData() {
+		RestTemplateServiceImpl restService = new RestTemplateServiceImpl();
+		return restService.getSiteInfo();
 		
-		return restService.getSiteData();
 	}
 }
