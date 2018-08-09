@@ -6,7 +6,7 @@ import java.util.Map;
 
 import lombok.Data;
 
-@Data 
+@Data
 public class SiteStore {
 
 	private Map<Long, Object> siteStore;
@@ -14,5 +14,4 @@ public class SiteStore {
 	public SiteStore() {
 		siteStore = Collections.synchronizedMap(new HashMap<Long, Object>());
 	}
-	
 }

@@ -2,6 +2,8 @@ package com.tnsupport.services.RestTemplateService.impl;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 	
 	RestTemplate restTemplate = new RestTemplate();
 	
+
 	public SiteInfo getSiteInfo() {
 		
 		SiteInfo siteInfo = restTemplate.getForObject(SITE_URI, SiteInfo.class);
@@ -38,6 +41,8 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 //		return performers;	
 //	}
 	
+	@Cacheable("SiteCache")
+	@CacheEvict(value="SiteCache", allEntries=true)
 	public List<Performer> getPerformers() {
 		ResponseEntity<List<Performer>> response = restTemplate.exchange(
 				PERFORMER_URI,
