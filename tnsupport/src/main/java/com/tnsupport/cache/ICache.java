@@ -1,5 +1,5 @@
 package com.tnsupport.cache;
 
-public class Cache {
+public interface ICache {
 	
 }
