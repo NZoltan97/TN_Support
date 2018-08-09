@@ -4,16 +4,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tnsupport.model.SiteData;
+import com.tnsupport.model.SiteStore;
+
+
 
 public class CacheImpl {
 	
 	//Darab alapú cache vagy idő alapú?
 	private final static int CACHE_SIZE=10;
-	private Map<Integer,SiteData> synchronizedCacheMap;
+	private Map<Long,SiteStore> synchronizedCacheMap;
 	
 	public CacheImpl() {
-		synchronizedCacheMap=Collections.synchronizedMap(new HashMap<Integer,SiteData>());
+		synchronizedCacheMap=Collections.synchronizedMap(new HashMap<Long,SiteStore>());
 	}
 	
 	public Map<Long, SiteStore> getCacheContent(){
@@ -24,7 +26,7 @@ public class CacheImpl {
 		if(synchronizedCacheMap.size()<CACHE_SIZE) {
 			synchronizedCacheMap.put(id, site);
 		}else {
-			synchronizedCacheMap.
+			
 		}
 	}
 	
