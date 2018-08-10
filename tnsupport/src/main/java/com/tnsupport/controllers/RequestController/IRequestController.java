@@ -13,7 +13,7 @@ public interface IRequestController {
 
 	public ResponseEntity<AttributeDTO> sendSiteID(@RequestParam ("hostName") String hostName, @RequestParam ("siteIDAtt") String siteIDAtt);
 	
-	public SiteInfo sendSiteInfo();
+	public SiteInfo siteInfo();
 	
-	public List<Performer> sendPerformerInfo();
+	public List<Performer> performerInfo();
 }

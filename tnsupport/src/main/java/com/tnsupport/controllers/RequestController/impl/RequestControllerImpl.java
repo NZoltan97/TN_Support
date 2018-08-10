@@ -14,6 +14,7 @@ import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.InnerDTO;
 import com.tnsupport.model.Performer;
 import com.tnsupport.model.SiteInfo;
+import com.tnsupport.model.Zone;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
 import com.tnsupport.services.RestTemplateService.impl.RestTemplateServiceImpl;
 
@@ -33,8 +34,8 @@ public class RequestControllerImpl implements IRequestController {
 		return mainService.saveSite(innerDto);
 	}
 	
-	@RequestMapping(value = "/sendSiteInfo", method = RequestMethod.GET, produces = "application/json")
-	public SiteInfo sendSiteInfo() {
+	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")
+	public SiteInfo siteInfo() {
 		return templateService.getSiteInfo();
 		
 	}
@@ -45,10 +46,21 @@ public class RequestControllerImpl implements IRequestController {
 //		return templateService.getPerformers();
 //	}
 	
-	@RequestMapping(value = "/sendPerformerInfo", method = RequestMethod.GET, produces = "application/json")
-	public List<Performer> sendPerformerInfo() {
+	@RequestMapping(value = "/performerInfo", method = RequestMethod.GET, produces = "application/json")
+	public List<Performer> performerInfo() {
 		
 		return templateService.getPerformers();
 	}
-
+	
+	@RequestMapping(value = "/zones", method = RequestMethod.GET, produces = "application/json")
+	public Zone[] zones() {
+		
+		return templateService.getZones();
+	}
+	
+	@RequestMapping(value = "clearCache", method = RequestMethod.GET, produces = "application/json")
+	public void clearCache() {
+		
+		templateService.resetAllEntries();
+	}
 }
