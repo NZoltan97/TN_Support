@@ -48,9 +48,21 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				new ParameterizedTypeReference<List<Performer>>() {
 				});
 		List<Performer> performers = response.getBody();
+
 		return performers;
 	}
 
+<<<<<<< HEAD
+	@Cacheable("zones")
+	public Zone[] getZones() {
+		ResponseEntity<Zone[]> response = restTemplate.exchange(ZONE_URI, HttpMethod.GET, null, Zone[].class);
+
+||||||| merged common ancestors
+	// @Cacheable("zones")
+	public Zone[] getZones() {
+		ResponseEntity<Zone[]> response = restTemplate.exchange(ZONE_URI, HttpMethod.GET, null, Zone[].class);
+		
+=======
 	@Cacheable("zones")
 	public Zone[] getZones(InnerDTO innerDto) {
 		StringBuilder exactURI = new StringBuilder();
@@ -59,6 +71,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		exactURI.append("/zones");
 		ResponseEntity<Zone[]> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				Zone[].class);
+>>>>>>> cca1a8342d46d5bc0ca36b7c7602b1793bcf0870
 		Zone[] zones = response.getBody();
 		return zones;
 	}

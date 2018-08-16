@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class InnerDTO {
 
-	private long siteID;
+	private long siteId;
 	
 	private String siteName;
 	

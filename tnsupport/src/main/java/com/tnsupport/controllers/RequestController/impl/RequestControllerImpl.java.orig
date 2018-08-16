@@ -29,21 +29,43 @@ public class RequestControllerImpl implements IRequestController {
 
 	@Autowired
 	RestTemplateServiceImpl templateService;
+<<<<<<< HEAD
+
+	@RequestMapping(value = "/siteID", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendSiteID(@RequestParam("hostName") String hostName,
+			@RequestParam("siteIDAtt") String siteIDAtt) {
+||||||| merged common ancestors
+	
+	@RequestMapping(value = "/siteID", method = RequestMethod.GET , produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendSiteID(@RequestParam ("hostName") String hostName, @RequestParam ("siteIDAtt") String siteIDAtt) {
+=======
 
 	@CrossOrigin
 	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendSiteId(@RequestParam("siteId") String siteId) {
+>>>>>>> cca1a8342d46d5bc0ca36b7c7602b1793bcf0870
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return mainService.saveSite(innerDto);
 	}
 
 	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")
+<<<<<<< HEAD
+	public SiteInfo getSiteInfo() {
+
+		return templateService.getSiteInfo();
+
+||||||| merged common ancestors
+	public SiteInfo getSiteInfo() {
+		return templateService.getSiteInfo();
+		
+=======
 	public SiteInfo getSiteInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getSiteInfo(innerDto);
 
+>>>>>>> cca1a8342d46d5bc0ca36b7c7602b1793bcf0870
 	}
 
 	@RequestMapping(value = "/performerInfo", method = RequestMethod.GET, produces = "application/json")
@@ -73,9 +95,33 @@ public class RequestControllerImpl implements IRequestController {
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getLocations(innerDto);
 	}
+<<<<<<< HEAD
+
+	@RequestMapping(value = "clearCache", method = RequestMethod.GET, produces = "application/json")
+||||||| merged common ancestors
+	
+	@RequestMapping(value = "clearCache", method = RequestMethod.GET, produces = "application/json")
+=======
 
 	@RequestMapping(value = "/clearCache", method = RequestMethod.GET, produces = "application/json")
+>>>>>>> cca1a8342d46d5bc0ca36b7c7602b1793bcf0870
 	public void clearCache() {
+<<<<<<< HEAD
+
+||||||| merged common ancestors
+		
+=======
+>>>>>>> cca1a8342d46d5bc0ca36b7c7602b1793bcf0870
 		templateService.resetAllEntries();
+<<<<<<< HEAD
+
 	}
+
+||||||| merged common ancestors
+}
+	
+=======
+	}
+
+>>>>>>> cca1a8342d46d5bc0ca36b7c7602b1793bcf0870
 }

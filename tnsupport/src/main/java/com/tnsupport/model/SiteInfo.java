@@ -27,8 +27,8 @@ public class SiteInfo implements Serializable {
 	private long auto_id;
 
 	@JsonProperty("id")
-	@Column(name = "siteID")
-	private long siteID;
+	@Column(name = "siteId")
+	private long siteId;
 	
 	@Column(name = "siteName")
 	private String siteName;
