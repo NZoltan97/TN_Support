@@ -12,7 +12,7 @@ import com.tnsupport.model.Ticket;
 
 public interface IRequestController {
 
-	public void sendSiteId(@RequestParam ("siteId") String siteId);
+	public ResponseEntity<AttributeDTO> sendSiteId(@RequestParam ("siteId") String siteId);
 	public ChatFuelDTO getSiteInfo(@RequestParam ("siteId") String siteId);
 	public ChatFuelDTO getPerformerInfo(@RequestParam ("siteId") String siteId);
 	public ChatFuelDTO getZoneInfo(@RequestParam ("siteId") String siteId);
