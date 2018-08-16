@@ -1,5 +1,7 @@
 package com.tnsupport.services.MainService.impl;
 
+import java.util.List;
+
 //import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,17 @@ public class MainServiceImpl implements IMainService {
 	
 	private AttributeDTO attDto = new AttributeDTO();
 	
-	public ResponseEntity<AttributeDTO> saveSite(InnerDTO innerDTO){
+	public void saveSite(InnerDTO innerDto){
 		SiteInfo siteInfo = new SiteInfo();
-		siteInfo.setSiteId(innerDTO.getSiteId());
-		attDto.addAttribute(siteInfo.getSiteId());
+		siteInfo.setSiteId(innerDto.getSiteId());
+		siteDao.save(siteInfo);
+	}
+	
+	
+	public ResponseEntity<AttributeDTO> getSiteId(){
+		List<SiteInfo> siteInfo=siteDao.findAll();
+		attDto.addAttribute(siteInfo.get(0).getSiteId());
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
+	
 }

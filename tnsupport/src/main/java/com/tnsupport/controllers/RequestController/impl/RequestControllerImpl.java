@@ -31,11 +31,15 @@ public class RequestControllerImpl implements IRequestController {
 	RestTemplateServiceImpl templateService;
 
 	@CrossOrigin
-	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendSiteId(@RequestParam("siteId") String siteId) {
+	@RequestMapping(value = "/saveSiteId", method = RequestMethod.GET, produces = "application/json")
+	public void sendSiteId(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return mainService.saveSite(innerDto);
+	}
+
+	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> getSiteId() {
+		return mainService.getSiteId();
 	}
 
 	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")

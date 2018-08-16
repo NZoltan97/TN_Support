@@ -14,7 +14,7 @@ import com.tnsupport.model.Zone;
 
 public interface IRequestController {
 
-	public ResponseEntity<AttributeDTO> sendSiteId(@RequestParam ("siteId") String siteId);
+	public void sendSiteId(@RequestParam ("siteId") String siteId);
 	public ChatFuelDTO getSiteInfo(@RequestParam ("siteId") String siteId);
 	public List<Performer> getPerformerInfo(@RequestParam ("siteId") String siteId);
 	public Zone[] getZoneInfo(@RequestParam ("siteId") String siteId);
