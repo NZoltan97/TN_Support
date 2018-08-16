@@ -17,6 +17,7 @@ import com.tnsupport.model.Performer;
 import com.tnsupport.model.SiteInfo;
 import com.tnsupport.model.Ticket;
 import com.tnsupport.model.Zone;
+import com.tnsupport.model.subtypes.ZoneGroup;
 import com.tnsupport.services.RestTemplateService.IRestTemplateService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,8 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 	}
 
 	@Cacheable("performers")
-	public List<Performer> getPerformers(InnerDTO innerDto) {
+	public ChatFuelDTO getPerformers(InnerDTO innerDto) {
+		ChatFuelDTO chatfuelDto = new ChatFuelDTO();
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -53,11 +55,20 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				new ParameterizedTypeReference<List<Performer>>() {
 				});
 		List<Performer> performers = response.getBody();
-		return performers;
+		for (Performer performer : performers) {
+			chatfuelDto.addMessages(performer.getName());
+			chatfuelDto.addMessages(performer.getCompanyName());
+			chatfuelDto.addMessages(performer.getPosition());
+			chatfuelDto.addMessages(performer.getProgramCount());
+			chatfuelDto.addMessages(Long.toString(performer.getPerformerID()));
+		}
+		
+		return chatfuelDto;
 	}
 
 	@Cacheable("zones")
-	public Zone[] getZones(InnerDTO innerDto) {
+	public ChatFuelDTO getZones(InnerDTO innerDto) {
+		ChatFuelDTO chatfuelDto = new ChatFuelDTO();
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -65,10 +76,27 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ResponseEntity<Zone[]> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				Zone[].class);
 		Zone[] zones = response.getBody();
-		return zones;
+		for (Zone zone : zones) {
+			List<ZoneGroup> zoneGroup = zone.getZoneGroups();
+			chatfuelDto.addMessages(zone.getName());
+			chatfuelDto.addMessages(zone.getAddress());
+			chatfuelDto.addMessages(zone.getStartDate());
+			chatfuelDto.addMessages(zone.getEndDate());
+			chatfuelDto.addMessages(Integer.toString(zone.getUpperLimit()));
+			chatfuelDto.addMessages(Long.toString(zone.getLocationId()));
+			for (ZoneGroup zgroup: zoneGroup) {
+				chatfuelDto.addMessages(zgroup.getZoneGroupType());
+				chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
+				chatfuelDto.addMessages(zgroup.getZoneName());
+			}
+			
+			chatfuelDto.addMessages(Boolean.toString(zone.isHighlighted()));
+		}
+		
+		return chatfuelDto;
 	}
 
-	@CacheEvict(value = "SiteCache", allEntries = true)
+	@CacheEvict(value = "siteInfos", allEntries = true)
 	public void resetAllEntries() {
 	}
 

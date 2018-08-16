@@ -15,9 +15,7 @@ import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
 import com.tnsupport.model.Location;
-import com.tnsupport.model.Performer;
 import com.tnsupport.model.Ticket;
-import com.tnsupport.model.Zone;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
 import com.tnsupport.services.RestTemplateService.impl.RestTemplateServiceImpl;
 
@@ -51,14 +49,14 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	@RequestMapping(value = "/performerInfo", method = RequestMethod.GET, produces = "application/json")
-	public List<Performer> getPerformerInfo(@RequestParam("siteId") String siteId) {
+	public ChatFuelDTO getPerformerInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getPerformers(innerDto);
 	}
 
 	@RequestMapping(value = "/zoneInfo", method = RequestMethod.GET, produces = "application/json")
-	public Zone[] getZoneInfo(@RequestParam("siteId") String siteId) {
+	public ChatFuelDTO getZoneInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getZones(innerDto);
