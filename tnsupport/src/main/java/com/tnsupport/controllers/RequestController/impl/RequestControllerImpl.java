@@ -36,7 +36,7 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> getSiteId() {
+	public ResponseEntity<AttributeDTO> getSiteId(@RequestParam("siteId") String siteId) {
 		return mainService.getSiteId();
 	}
 
