@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.tnsupport.dtos.InnerDTO;
 import com.tnsupport.model.Location;
 import com.tnsupport.model.Performer;
 import com.tnsupport.model.SiteInfo;
@@ -23,47 +24,56 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RestTemplateServiceImpl implements IRestTemplateService {
 
-	final String SITE_URI = "https://api.sandbox.ticketninja.io/api/v1/landing/115256";
-	final String PERFORMER_URI = "https://api.sandbox.ticketninja.io/api/v1/landing/115256/performers";
-	final String ZONE_URI = "https://api.sandbox.ticketninja.io/api/v1/landing/115256/zones";
-	final String TICKET_URI = "https://api.sandbox.ticketninja.io/api/v1/landing/115256/tickets";
-	final String LOCATION_URI = "https://api.sandbox.ticketninja.io/api/v1/landing/115256/locations";
+	final String URI = "https://api.sandbox.ticketninja.io/api/v1/landing/";
 
 	RestTemplate restTemplate = new RestTemplate();
 
 	@Cacheable("siteInfos")
-	public SiteInfo getSiteInfo() {
-
-		SiteInfo siteInfo = restTemplate.getForObject(SITE_URI, SiteInfo.class);
-
+	public SiteInfo getSiteInfo(InnerDTO innerDto) {
+		StringBuilder exactURI = new StringBuilder();
+		exactURI.append(URI);
+		exactURI.append(innerDto.getSiteId());
+		SiteInfo siteInfo = restTemplate.getForObject(exactURI.toString(), SiteInfo.class);
 		log.debug("currency:{}", siteInfo.getCurrency());
 		return siteInfo;
 	};
 
 	@Cacheable("performers")
-	public List<Performer> getPerformers() {
-		ResponseEntity<List<Performer>> response = restTemplate.exchange(PERFORMER_URI, HttpMethod.GET, null,
+	public List<Performer> getPerformers(InnerDTO innerDto) {
+		StringBuilder exactURI = new StringBuilder();
+		exactURI.append(URI);
+		exactURI.append(innerDto.getSiteId());
+		exactURI.append("/performers");
+		ResponseEntity<List<Performer>> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Performer>>() {
 				});
 		List<Performer> performers = response.getBody();
 		return performers;
 	}
 
-	// @Cacheable("zones")
-	public Zone[] getZones() {
-		ResponseEntity<Zone[]> response = restTemplate.exchange(ZONE_URI, HttpMethod.GET, null, Zone[].class);
-		
+	@Cacheable("zones")
+	public Zone[] getZones(InnerDTO innerDto) {
+		StringBuilder exactURI = new StringBuilder();
+		exactURI.append(URI);
+		exactURI.append(innerDto.getSiteId());
+		exactURI.append("/zones");
+		ResponseEntity<Zone[]> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
+				Zone[].class);
 		Zone[] zones = response.getBody();
 		return zones;
 	}
 
 	@CacheEvict(value = "SiteCache", allEntries = true)
 	public void resetAllEntries() {
-}
+	}
 
 	@Cacheable("tickets")
-	public List<Ticket> getTickets() {
-		ResponseEntity<List<Ticket>> response = restTemplate.exchange(TICKET_URI, HttpMethod.GET, null,
+	public List<Ticket> getTickets(InnerDTO innerDto) {
+		StringBuilder exactURI = new StringBuilder();
+		exactURI.append(URI);
+		exactURI.append(innerDto.getSiteId());
+		exactURI.append("/tickets");
+		ResponseEntity<List<Ticket>> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Ticket>>() {
 				});
 		List<Ticket> tickets = response.getBody();
@@ -72,8 +82,12 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 	}
 
 	@Cacheable("locations")
-	public List<Location> getLocations() {
-		ResponseEntity<List<Location>> response = restTemplate.exchange(LOCATION_URI, HttpMethod.GET, null,
+	public List<Location> getLocations(InnerDTO innerDto) {
+		StringBuilder exactURI = new StringBuilder();
+		exactURI.append(URI);
+		exactURI.append(innerDto.getSiteId());
+		exactURI.append("/tickets");
+		ResponseEntity<List<Location>> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Location>>() {
 				});
 		List<Location> locations = response.getBody();
