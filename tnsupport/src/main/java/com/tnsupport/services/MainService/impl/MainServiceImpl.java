@@ -25,10 +25,12 @@ public class MainServiceImpl implements IMainService {
 	
 	private AttributeDTO attDto = new AttributeDTO();
 	
-	public void saveSite(InnerDTO innerDto){
+	public ResponseEntity<AttributeDTO> saveSite(InnerDTO innerDto){
 		SiteInfo siteInfo = new SiteInfo();
 		siteInfo.setSiteId(innerDto.getSiteId());
 		siteDao.save(siteInfo);
+		attDto.addAttribute(siteInfo.getSiteId());
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 	
 	

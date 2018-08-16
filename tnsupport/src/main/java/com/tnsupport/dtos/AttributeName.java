@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor
 public class AttributeName {
 	
-	private String siteIDAtt;
+	private String siteId;
 	
 }
