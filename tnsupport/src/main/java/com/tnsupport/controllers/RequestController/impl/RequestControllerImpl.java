@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tnsupport.controllers.RequestController.IRequestController;
 import com.tnsupport.dtos.AttributeDTO;
+import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
 import com.tnsupport.model.Location;
 import com.tnsupport.model.Performer;
-import com.tnsupport.model.SiteInfo;
 import com.tnsupport.model.Ticket;
 import com.tnsupport.model.Zone;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
@@ -39,7 +39,7 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")
-	public SiteInfo getSiteInfo(@RequestParam("siteId") String siteId) {
+	public ChatFuelDTO getSiteInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getSiteInfo(innerDto);

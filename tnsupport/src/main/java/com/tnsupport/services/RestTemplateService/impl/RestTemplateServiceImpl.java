@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
 import com.tnsupport.model.Location;
 import com.tnsupport.model.Performer;
@@ -29,14 +30,18 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 	RestTemplate restTemplate = new RestTemplate();
 
 	@Cacheable("siteInfos")
-	public SiteInfo getSiteInfo(InnerDTO innerDto) {
+	public ChatFuelDTO getSiteInfo(InnerDTO innerDto) {
+		ChatFuelDTO chatfuelDto = new ChatFuelDTO();
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
 		SiteInfo siteInfo = restTemplate.getForObject(exactURI.toString(), SiteInfo.class);
+		chatfuelDto.addMessages(siteInfo.getSiteName());
+		chatfuelDto.addMessages(siteInfo.getSiteAddress());
+		chatfuelDto.addMessages(siteInfo.getCurrency());
 		log.debug("currency:{}", siteInfo.getCurrency());
-		return siteInfo;
-	};
+		return chatfuelDto;
+	}
 
 	@Cacheable("performers")
 	public List<Performer> getPerformers(InnerDTO innerDto) {
