@@ -89,7 +89,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 			// List<ZoneGroup> zoneGroup = zone.getZoneGroups();
 			// kell -e ide egyaltalan button??
 			dto.addElement(attList, attachment, zone.getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
-					zone.getAddress(), "web_url", "url", "buttonTitle");
+					zone.getAddress(), "web_url", "https://fashionweek.sandbox.ticketninja.io/sessions/"+zone.getZoneID(), "Megnézem");
 			// for (ZoneGroup zgroup: zoneGroup) {
 			// chatfuelDto.addMessages(zgroup.getZoneGroupType());
 			// chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
@@ -149,9 +149,8 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		attList.setAttachment(attachment);
 
 		for (Location location : locations) {
-
 			dto.addElement(attList, attachment, location.getName(), "http://chatbot.synapps.hu/ninja_logo.png", location.getDescription(), "web_url",
-					"https://www.google.hu/maps/dir//" + location.getName(), "Útvonaltervezés");
+					"https://www.google.hu/maps/dir//"+location.getName().replace(" ", "+"), "Útvonaltervezés");
 		}
 
 		dto.getMessages().add(attList);
