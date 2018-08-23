@@ -108,7 +108,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		for (Ticket ticket : tickets) {
 			dto.addElement(ticket.getName(),"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", ticket.getDescription(),
-					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+					 "web_url", "https://fashionweek.sandbox.ticketninja.io/#tickets", "Megnézem");
 		}
 		return dto;
 	}
@@ -118,15 +118,15 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
-		exactURI.append("/tickets");
+		exactURI.append("/locations");
 		ResponseEntity<List<Location>> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Location>>() {
 				});
 		List<Location> locations = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		for (Location location : locations) {
-			dto.addElement(location.getName(),"http://chatbot.synapps.hu/background.png"/**/, location.getDescription(),
-					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+			dto.addElement(location.getName(),"", location.getDescription(),
+					 "web_url", "https://www.google.hu/maps/dir//"+location.getName(), "Útvonaltervezés");
 		}
 		return dto;
 	}
