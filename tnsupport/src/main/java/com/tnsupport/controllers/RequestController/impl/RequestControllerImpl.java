@@ -34,55 +34,9 @@ public class RequestControllerImpl implements IRequestController {
 		return mainService.saveSite(innerDto);
 	}
 
-	@RequestMapping(value = "/trying", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<String> tryList() {
-		String valami = "{\r\n" + " \"messages\": [\r\n" + "    {\r\n" + "      \"attachment\":{\r\n"
-				+ "        \"type\":\"template\",\r\n" + "        \"payload\":{\r\n"
-				+ "          \"template_type\":\"generic\",\r\n" + "          \"image_aspect_ratio\": \"square\",\r\n"
-				+ "          \"elements\":[\r\n" + "            {\r\n"
-				+ "              \"title\":\"Classic White T-Shirt\",\r\n"
-				+ "              \"image_url\":\"http://chatbot.synapps.hu/ninja_logo.png\",\r\n"
-				+ "              \"subtitle\":\"Soft white cotton t-shirt is back in style\",\r\n"
-				+ "              \"buttons\":[\r\n" + "                {\r\n"
-				+ "                  \"type\":\"web_url\",\r\n"
-				+ "                  \"url\":\"https://petersapparel.parseapp.com/view_item?item_id=100\",\r\n"
-				+ "                  \"title\":\"View Item\"\r\n" + "                },\r\n" + "                {\r\n"
-				+ "                  \"type\":\"web_url\",\r\n"
-				+ "                  \"url\":\"https://petersapparel.parseapp.com/buy_item?item_id=100\",\r\n"
-				+ "                  \"title\":\"Buy Item\"\r\n" + "                }\r\n" + "              ]\r\n"
-				+ "            },\r\n" + "            {\r\n" + "              \"title\":\"Classic Grey T-Shirt\",\r\n"
-				+ "              \"image_url\":\"http://chatbot.synapps.hu/ninja_logo.png\",\r\n"
-				+ "              \"subtitle\":\"Soft gray cotton t-shirt is back in style\",\r\n"
-				+ "              \"buttons\":[\r\n" + "                {\r\n"
-				+ "                  \"type\":\"web_url\",\r\n"
-				+ "                  \"url\":\"https://petersapparel.parseapp.com/view_item?item_id=101\",\r\n"
-				+ "                  \"title\":\"View Item\"\r\n" + "                },\r\n" + "                {\r\n"
-				+ "                  \"type\":\"web_url\",\r\n"
-				+ "                  \"url\":\"https://petersapparel.parseapp.com/buy_item?item_id=101\",\r\n"
-				+ "                  \"title\":\"Buy Item\"\r\n" + "                }\r\n" + "              ]\r\n"
-				+ "            }\r\n" + "          ]\r\n" + "        }\r\n" + "      }\r\n" + "    }\r\n" + "  ]\r\n"
-				+ "}";
-
-		return new ResponseEntity<String>(valami, HttpStatus.OK);
-	}
-
-//	@RequestMapping(value = "/gallery", method = RequestMethod.GET, produces = "application/json")
-//	public ResponseEntity<ChatFuelGalleryDTO> getGallery() {
-//		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-//		dto.addElement("TicketNinja", "http://chatbot.synapps.hu/background.png", "background",
-//				 "web_url", "http://chatbot.synapps.hu/ninja_logo.png", "View Item");
-//
-//		return new ResponseEntity<ChatFuelGalleryDTO>(dto, HttpStatus.OK);
-//	}
-
 	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> getSiteId(@RequestParam("siteId") String siteId) {
 		return mainService.getSiteId();
-	}
-
-	@RequestMapping(value = "/getAllSiteId", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<String> getAllSiteId() {
-		return mainService.getAllId();
 	}
 	
 	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")
