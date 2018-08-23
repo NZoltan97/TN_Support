@@ -1,5 +1,4 @@
 package com.tnsupport.dtos.gallery;
-
 import lombok.Data;
 
 @Data

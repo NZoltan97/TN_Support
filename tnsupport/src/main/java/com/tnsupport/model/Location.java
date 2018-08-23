@@ -32,4 +32,7 @@ public class Location {
 	@Column(name = "programCount")
 	private String programCount;
 	
+	@Column(name="description")
+	private String description;
+	
 }

@@ -14,7 +14,7 @@ public class ChatFuelGalleryDTO {
 	}
 	
 	public void addElement(String elementTitle, String elementImage_url, String elementSubtitle,
-			String buttonType, String buttonUrl, String buttonTitle) {
+		String buttonType, String buttonUrl, String buttonTitle) {
 		AttachmentList attList = new AttachmentList();
 		Attachment attachment = new Attachment();
 		attList.setAttachment(attachment);

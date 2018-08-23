@@ -39,6 +39,9 @@ public class Ticket {
 
 	@Column(name = "expired")
 	private String expired;
+	
+	@Column(name = "description")
+	private String description;
 
 	@Column(name = "properties")
 	private List<Property> properties;
