@@ -70,7 +70,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		return dto;
 	}
 
-//	programok
+	// programok
 	@Cacheable("zones")
 	public ChatFuelGalleryDTO getZones(InnerDTO innerDto) {
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
@@ -86,17 +86,17 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				Zone[].class);
 		Zone[] zones = response.getBody();
 		for (Zone zone : zones) {
-//			List<ZoneGroup> zoneGroup = zone.getZoneGroups();
-//			kell -e ide egyaltalan button??
+			// List<ZoneGroup> zoneGroup = zone.getZoneGroups();
+			// kell -e ide egyaltalan button??
 			dto.addElement(attList, attachment, zone.getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
 					zone.getAddress(), "web_url", "url", "buttonTitle");
-//			for (ZoneGroup zgroup: zoneGroup) {
-//				chatfuelDto.addMessages(zgroup.getZoneGroupType());
-//				chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
-//				chatfuelDto.addMessages(zgroup.getZoneName());
-//			}
+			// for (ZoneGroup zgroup: zoneGroup) {
+			// chatfuelDto.addMessages(zgroup.getZoneGroupType());
+			// chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
+			// chatfuelDto.addMessages(zgroup.getZoneName());
+			// }
 
-//			chatfuelDto.addMessages(Boolean.toString(zone.isHighlighted()));
+			// chatfuelDto.addMessages(Boolean.toString(zone.isHighlighted()));
 		}
 
 		dto.getMessages().add(attList);
@@ -123,8 +123,9 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		attList.setAttachment(attachment);
 
 		for (Ticket ticket : tickets) {
+
 			dto.addElement(attList, attachment, ticket.getName(), "http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png",
-					ticket.getDescription(), "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/* Ticket url here */,
+					ticket.getDescription(), "web_url", "https://fashionweek.sandbox.ticketninja.io/#tickets",
 					"Megnézem");
 		}
 
@@ -137,7 +138,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
-		exactURI.append("/tickets");
+		exactURI.append("/locations");
 		ResponseEntity<List<Location>> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Location>>() {
 				});
@@ -148,9 +149,9 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		attList.setAttachment(attachment);
 
 		for (Location location : locations) {
-			dto.addElement(attList, attachment, location.getName(), "http://chatbot.synapps.hu/background.png"/**/,
-					location.getDescription(), "web_url",
-					"http://chatbot.synapps.hu/ninja_logo.png"/* Ticket url here */, "Megnézem");
+
+			dto.addElement(attList, attachment, location.getName(), "http://chatbot.synapps.hu/ninja_logo.png", location.getDescription(), "web_url",
+					"https://www.google.hu/maps/dir//" + location.getName(), "Útvonaltervezés");
 		}
 
 		dto.getMessages().add(attList);
