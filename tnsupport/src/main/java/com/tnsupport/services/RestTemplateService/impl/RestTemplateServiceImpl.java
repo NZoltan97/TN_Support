@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
+import com.tnsupport.dtos.gallery.Attachment;
+import com.tnsupport.dtos.gallery.AttachmentList;
 import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
 import com.tnsupport.model.Location;
 import com.tnsupport.model.Performer;
@@ -32,21 +34,25 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 
 	@Cacheable("siteInfos")
 	public ChatFuelDTO getSiteInfo(InnerDTO innerDto) {
-		ChatFuelDTO chatfuelDto = new ChatFuelDTO();
+		ChatFuelDTO dto = new ChatFuelDTO();
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
 		SiteInfo siteInfo = restTemplate.getForObject(exactURI.toString(), SiteInfo.class);
-		chatfuelDto.addMessages(siteInfo.getSiteName());
-		chatfuelDto.addMessages(siteInfo.getSiteAddress());
-		chatfuelDto.addMessages(siteInfo.getCurrency());
+		dto.addMessages(siteInfo.getSiteName());
+		dto.addMessages(siteInfo.getSiteAddress());
+		dto.addMessages(siteInfo.getCurrency());
 		log.debug("currency:{}", siteInfo.getCurrency());
-		return chatfuelDto;
+		return dto;
 	}
 
 	@Cacheable("performers")
 	public ChatFuelGalleryDTO getPerformers(InnerDTO innerDto) {
-		ChatFuelGalleryDTO chatfuelDto = new ChatFuelGalleryDTO();
+		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		AttachmentList attList = new AttachmentList();
+		Attachment attachment = new Attachment();
+		attList.setAttachment(attachment);
+
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -56,17 +62,22 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				});
 		List<Performer> performers = response.getBody();
 		for (Performer performer : performers) {
-			chatfuelDto.addElement(performer.getName(), performer.getProfilePicBase64(), performer.getPosition(),
-					"web_url", performer.getCompanyUrl(), performer.getCompanyName());
+			dto.addElement(attList, attachment, performer.getName(), performer.getProfilePicBase64(),
+					performer.getPosition(), "web_url", performer.getCompanyUrl(), performer.getCompanyName());
 		}
-		
-		return chatfuelDto;
+
+		dto.getMessages().add(attList);
+		return dto;
 	}
 
 //	programok
 	@Cacheable("zones")
 	public ChatFuelGalleryDTO getZones(InnerDTO innerDto) {
-		ChatFuelGalleryDTO chatfuelDto = new ChatFuelGalleryDTO();
+		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		AttachmentList attList = new AttachmentList();
+		Attachment attachment = new Attachment();
+		attList.setAttachment(attachment);
+
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -77,18 +88,19 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		for (Zone zone : zones) {
 //			List<ZoneGroup> zoneGroup = zone.getZoneGroups();
 //			kell -e ide egyaltalan button??
-			chatfuelDto.addElement(zone.getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png", zone.getAddress(),
-					"web_url", "url", "buttonTitle");
+			dto.addElement(attList, attachment, zone.getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
+					zone.getAddress(), "web_url", "url", "buttonTitle");
 //			for (ZoneGroup zgroup: zoneGroup) {
 //				chatfuelDto.addMessages(zgroup.getZoneGroupType());
 //				chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
 //				chatfuelDto.addMessages(zgroup.getZoneName());
 //			}
-			
+
 //			chatfuelDto.addMessages(Boolean.toString(zone.isHighlighted()));
 		}
-		
-		return chatfuelDto;
+
+		dto.getMessages().add(attList);
+		return dto;
 	}
 
 	@CacheEvict(value = "siteInfos", allEntries = true)
@@ -106,10 +118,17 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				});
 		List<Ticket> tickets = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		AttachmentList attList = new AttachmentList();
+		Attachment attachment = new Attachment();
+		attList.setAttachment(attachment);
+
 		for (Ticket ticket : tickets) {
-			dto.addElement(ticket.getName(),"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", ticket.getDescription(),
-					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+			dto.addElement(attList, attachment, ticket.getName(), "http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png",
+					ticket.getDescription(), "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/* Ticket url here */,
+					"Megnézem");
 		}
+
+		dto.getMessages().add(attList);
 		return dto;
 	}
 
@@ -124,11 +143,18 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				});
 		List<Location> locations = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		AttachmentList attList = new AttachmentList();
+		Attachment attachment = new Attachment();
+		attList.setAttachment(attachment);
+
 		for (Location location : locations) {
-			dto.addElement(location.getName(),"http://chatbot.synapps.hu/background.png"/**/, location.getDescription(),
-					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+			dto.addElement(attList, attachment, location.getName(), "http://chatbot.synapps.hu/background.png"/**/,
+					location.getDescription(), "web_url",
+					"http://chatbot.synapps.hu/ninja_logo.png"/* Ticket url here */, "Megnézem");
 		}
+
+		dto.getMessages().add(attList);
 		return dto;
 	}
-	
+
 }

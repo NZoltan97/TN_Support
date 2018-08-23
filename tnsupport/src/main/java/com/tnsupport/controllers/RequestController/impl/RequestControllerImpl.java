@@ -66,14 +66,14 @@ public class RequestControllerImpl implements IRequestController {
 		return new ResponseEntity<String>(valami, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/gallery", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ChatFuelGalleryDTO> getGallery() {
-		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		dto.addElement("TicketNinja", "http://chatbot.synapps.hu/background.png", "background",
-				 "web_url", "http://chatbot.synapps.hu/ninja_logo.png", "View Item");
-
-		return new ResponseEntity<ChatFuelGalleryDTO>(dto, HttpStatus.OK);
-	}
+//	@RequestMapping(value = "/gallery", method = RequestMethod.GET, produces = "application/json")
+//	public ResponseEntity<ChatFuelGalleryDTO> getGallery() {
+//		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+//		dto.addElement("TicketNinja", "http://chatbot.synapps.hu/background.png", "background",
+//				 "web_url", "http://chatbot.synapps.hu/ninja_logo.png", "View Item");
+//
+//		return new ResponseEntity<ChatFuelGalleryDTO>(dto, HttpStatus.OK);
+//	}
 
 	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> getSiteId(@RequestParam("siteId") String siteId) {
