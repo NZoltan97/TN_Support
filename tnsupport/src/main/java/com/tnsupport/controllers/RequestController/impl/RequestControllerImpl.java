@@ -1,7 +1,5 @@
 package com.tnsupport.controllers.RequestController.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +14,6 @@ import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
 import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
-import com.tnsupport.model.Location;
-import com.tnsupport.model.Ticket;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
 import com.tnsupport.services.RestTemplateService.impl.RestTemplateServiceImpl;
 
@@ -107,17 +103,17 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	@RequestMapping(value = "/ticketInfo", method = RequestMethod.GET, produces = "application/json")
-	public List<Ticket> getTicketInfo(@RequestParam("siteId") String siteId) {
+	public ResponseEntity<ChatFuelGalleryDTO> getTicketInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return templateService.getTickets(innerDto);
+		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getTickets(innerDto), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/locationInfo", method = RequestMethod.GET, produces = "application/json")
-	public List<Location> getLocationInfo(@RequestParam("siteId") String siteId) {
+	public ResponseEntity<ChatFuelGalleryDTO> getLocationInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return templateService.getLocations(innerDto);
+		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getLocations(innerDto),HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/clearCache", method = RequestMethod.GET, produces = "application/json")

@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
+import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
 import com.tnsupport.model.Location;
 import com.tnsupport.model.Performer;
 import com.tnsupport.model.SiteInfo;
@@ -101,7 +102,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 	}
 
 	@Cacheable("tickets")
-	public List<Ticket> getTickets(InnerDTO innerDto) {
+	public ChatFuelGalleryDTO getTickets(InnerDTO innerDto) {
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -110,12 +111,16 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				new ParameterizedTypeReference<List<Ticket>>() {
 				});
 		List<Ticket> tickets = response.getBody();
-
-		return tickets;
+		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		for (Ticket ticket : tickets) {
+			dto.addElement(ticket.getName(),"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", ticket.getDescription(),
+					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+		}
+		return dto;
 	}
 
 	@Cacheable("locations")
-	public List<Location> getLocations(InnerDTO innerDto) {
+	public ChatFuelGalleryDTO getLocations(InnerDTO innerDto) {
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -124,7 +129,12 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				new ParameterizedTypeReference<List<Location>>() {
 				});
 		List<Location> locations = response.getBody();
-
-		return locations;
+		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		for (Location location : locations) {
+			dto.addElement(location.getName(),"http://chatbot.synapps.hu/background.png"/**/, location.getDescription(),
+					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+		}
+		return dto;
 	}
+	
 }
