@@ -93,14 +93,14 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	@RequestMapping(value = "/performerInfo", method = RequestMethod.GET, produces = "application/json")
-	public ChatFuelDTO getPerformerInfo(@RequestParam("siteId") String siteId) {
+	public ChatFuelGalleryDTO getPerformerInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getPerformers(innerDto);
 	}
 
 	@RequestMapping(value = "/zoneInfo", method = RequestMethod.GET, produces = "application/json")
-	public ChatFuelDTO getZoneInfo(@RequestParam("siteId") String siteId) {
+	public ChatFuelGalleryDTO getZoneInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getZones(innerDto);

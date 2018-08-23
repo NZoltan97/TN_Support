@@ -38,4 +38,10 @@ public class Performer {
 	@Column(name = "programCount")
 	private String programCount;
 	
+	@Column(name = "profilePicBase64")
+	private String profilePicBase64;
+	
+	@Column(name = "companyUrl")
+	private String companyUrl;
+	
 }
