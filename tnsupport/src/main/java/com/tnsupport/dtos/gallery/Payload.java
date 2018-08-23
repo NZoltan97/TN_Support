@@ -13,7 +13,7 @@ public class Payload {
 	
 	public Payload() {
 		this.template_type = "generic";
-		this.image_aspect_ratio = "square";
+		this.image_aspect_ratio = "horizontal";
 		elements = new ArrayList<Element>();
 				
 	}

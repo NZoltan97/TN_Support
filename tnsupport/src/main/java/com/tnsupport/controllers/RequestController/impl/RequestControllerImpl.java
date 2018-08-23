@@ -80,6 +80,11 @@ public class RequestControllerImpl implements IRequestController {
 		return mainService.getSiteId();
 	}
 
+	@RequestMapping(value = "/getAllSiteId", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<String> getAllSiteId() {
+		return mainService.getAllId();
+	}
+	
 	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")
 	public ChatFuelDTO getSiteInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();

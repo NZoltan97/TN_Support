@@ -32,12 +32,19 @@ public class MainServiceImpl implements IMainService {
 		attDto.addAttribute(siteInfo.getSiteId());
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
-	
+ 
 	
 	public ResponseEntity<AttributeDTO> getSiteId(){
 		List<SiteInfo> siteInfo=siteDao.findAll();
 		attDto.addAttribute(siteInfo.get(0).getSiteId());
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<String> getAllId(){
+		
+		List<SiteInfo> siteInfo=siteDao.findAll();
+		return new ResponseEntity<String>(siteInfo.toString(),HttpStatus.OK);
+		
 	}
 	
 }

@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RestTemplateServiceImpl implements IRestTemplateService {
 
-	final String URI = "https://api.sandbox.ticketninja.io/api/v1/landing/";
+	final String URI = "https://api.ticketninja.io/api/v1/landing/";
 
 	RestTemplate restTemplate = new RestTemplate();
 
@@ -89,7 +89,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 			// List<ZoneGroup> zoneGroup = zone.getZoneGroups();
 			// kell -e ide egyaltalan button??
 			dto.addElement(attList, attachment, zone.getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
-					zone.getAddress(), "web_url", "https://fashionweek.sandbox.ticketninja.io/sessions/"+zone.getZoneID(), "Megnézem");
+					zone.getAddress(), "web_url", "https://ideathon.ticketninja.io/sessions/"+zone.getZoneID(), "Megnézem");
 			// for (ZoneGroup zgroup: zoneGroup) {
 			// chatfuelDto.addMessages(zgroup.getZoneGroupType());
 			// chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
@@ -125,7 +125,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		for (Ticket ticket : tickets) {
 
 			dto.addElement(attList, attachment, ticket.getName(), "http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png",
-					ticket.getDescription(), "web_url", "https://fashionweek.sandbox.ticketninja.io/#tickets",
+					ticket.getDescription(), "web_url", "https://ideathon.ticketninja.io/#tickets",
 					"Megnézem");
 		}
 
