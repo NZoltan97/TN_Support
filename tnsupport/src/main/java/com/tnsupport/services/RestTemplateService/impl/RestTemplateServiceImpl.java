@@ -63,7 +63,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 			chatfuelDto.addMessages(performer.getProgramCount());
 			chatfuelDto.addMessages(Long.toString(performer.getPerformerID()));
 		}
-		
+
 		return chatfuelDto;
 	}
 
@@ -85,15 +85,14 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 			chatfuelDto.addMessages(zone.getEndDate());
 			chatfuelDto.addMessages(Integer.toString(zone.getUpperLimit()));
 			chatfuelDto.addMessages(Long.toString(zone.getLocationId()));
-			for (ZoneGroup zgroup: zoneGroup) {
+			for (ZoneGroup zgroup : zoneGroup) {
 				chatfuelDto.addMessages(zgroup.getZoneGroupType());
 				chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
 				chatfuelDto.addMessages(zgroup.getZoneName());
 			}
-			
 			chatfuelDto.addMessages(Boolean.toString(zone.isHighlighted()));
 		}
-		
+
 		return chatfuelDto;
 	}
 
@@ -113,8 +112,9 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		List<Ticket> tickets = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		for (Ticket ticket : tickets) {
-			dto.addElement(ticket.getName(),"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", ticket.getDescription(),
-					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+			dto.addElement(ticket.getName(), "http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png",
+					ticket.getDescription(), "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/* Ticket url here */,
+					"Megnézem");
 		}
 		return dto;
 	}
@@ -131,10 +131,11 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		List<Location> locations = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		for (Location location : locations) {
-			dto.addElement(location.getName(),"http://chatbot.synapps.hu/background.png"/**/, location.getDescription(),
-					 "web_url", "http://chatbot.synapps.hu/ninja_logo.png"/*Ticket url here*/, "Megnézem");
+			dto.addElement(location.getName(), "http://chatbot.synapps.hu/background.png"/**/,
+					location.getDescription(), "web_url",
+					"http://chatbot.synapps.hu/ninja_logo.png"/* Ticket url here */, "Megnézem");
 		}
 		return dto;
 	}
-	
+
 }
