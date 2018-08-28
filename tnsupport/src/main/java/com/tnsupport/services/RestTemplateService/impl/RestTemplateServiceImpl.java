@@ -89,7 +89,8 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 			// List<ZoneGroup> zoneGroup = zone.getZoneGroups();
 			// kell -e ide egyaltalan button??
 			dto.addElement(attList, attachment, zone.getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
-					zone.getAddress(), "web_url", "https://ideathon.ticketninja.io/sessions/"+zone.getZoneID(), "Megnézem");
+					zone.getAddress(), "web_url", "https://ideathon.ticketninja.io/sessions/" + zone.getZoneID(),
+					"Megnézem");
 			// for (ZoneGroup zgroup: zoneGroup) {
 			// chatfuelDto.addMessages(zgroup.getZoneGroupType());
 			// chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
@@ -125,8 +126,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		for (Ticket ticket : tickets) {
 
 			dto.addElement(attList, attachment, ticket.getName(), "http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png",
-					ticket.getDescription(), "web_url", "https://ideathon.ticketninja.io/#tickets",
-					"Megnézem");
+					ticket.getDescription(), "web_url", "https://ideathon.ticketninja.io/#tickets", "Megnézem");
 		}
 
 		dto.getMessages().add(attList);
@@ -149,8 +149,9 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		attList.setAttachment(attachment);
 
 		for (Location location : locations) {
-			dto.addElement(attList, attachment, location.getName(), "http://chatbot.synapps.hu/ninja_logo.png", location.getDescription(), "web_url",
-					"https://www.google.hu/maps/dir//"+location.getName().replace(" ", "+"), "Útvonaltervezés");
+			dto.addElement(attList, attachment, location.getName(), "http://chatbot.synapps.hu/ninja_logo.png",
+					location.getDescription(), "web_url",
+					"https://www.google.hu/maps/dir//" + location.getName().replace(" ", "+"), "Útvonaltervezés");
 		}
 
 		dto.getMessages().add(attList);

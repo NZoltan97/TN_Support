@@ -40,11 +40,4 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 	
-	public ResponseEntity<String> getAllId(){
-		
-		List<SiteInfo> siteInfo=siteDao.findAll();
-		return new ResponseEntity<String>(siteInfo.toString(),HttpStatus.OK);
-		
-	}
-	
 }

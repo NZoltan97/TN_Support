@@ -11,8 +11,8 @@ public interface IRequestController {
 
 	public ResponseEntity<AttributeDTO> sendSiteId(@RequestParam ("siteId") String siteId);
 	public ChatFuelDTO getSiteInfo(@RequestParam ("siteId") String siteId);
-	public ChatFuelGalleryDTO getPerformerInfo(@RequestParam ("siteId") String siteId);
-	public ChatFuelGalleryDTO getZoneInfo(@RequestParam ("siteId") String siteId);
+	public ResponseEntity<ChatFuelGalleryDTO> getPerformerInfo(@RequestParam ("siteId") String siteId);
+	public ResponseEntity<ChatFuelGalleryDTO> getZoneInfo(@RequestParam ("siteId") String siteId);
 	public ResponseEntity<ChatFuelGalleryDTO> getTicketInfo(@RequestParam ("siteId") String siteId);
 	public ResponseEntity<ChatFuelGalleryDTO> getLocationInfo(@RequestParam ("siteId") String siteId);
 }
