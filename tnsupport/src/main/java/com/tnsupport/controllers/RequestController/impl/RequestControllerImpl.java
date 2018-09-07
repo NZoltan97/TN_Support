@@ -17,7 +17,10 @@ import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
 import com.tnsupport.services.RestTemplateService.impl.RestTemplateServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class RequestControllerImpl implements IRequestController {
 
 	@Autowired
@@ -33,19 +36,19 @@ public class RequestControllerImpl implements IRequestController {
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return mainService.saveSite(innerDto);
 	}
-	
+
 	@RequestMapping(value = "/valami", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> getSuck(@RequestParam("siteId") String siteId){
-		AttributeDTO attDto=new AttributeDTO();
+	public ResponseEntity<AttributeDTO> getSuck(@RequestParam("siteId") String siteId) {
+		AttributeDTO attDto = new AttributeDTO();
 		attDto.addAttribute(1);
-		return new ResponseEntity<AttributeDTO>(attDto,HttpStatus.OK);
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> getSiteId(@RequestParam("siteId") String siteId) {
 		return mainService.getSiteId();
 	}
-	
+
 	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")
 	public ChatFuelDTO getSiteInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
@@ -58,14 +61,15 @@ public class RequestControllerImpl implements IRequestController {
 	public ResponseEntity<ChatFuelGalleryDTO> getPerformerInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getPerformers(innerDto),HttpStatus.OK);
+		log.info("RestController siteId=", innerDto.getSiteId());
+		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getPerformers(innerDto), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/zoneInfo", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<ChatFuelGalleryDTO> getZoneInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getZones(innerDto),HttpStatus.OK);
+		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getZones(innerDto), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/ticketInfo", method = RequestMethod.GET, produces = "application/json")
@@ -79,7 +83,7 @@ public class RequestControllerImpl implements IRequestController {
 	public ResponseEntity<ChatFuelGalleryDTO> getLocationInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getLocations(innerDto),HttpStatus.OK);
+		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getLocations(innerDto), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/clearCache", method = RequestMethod.GET, produces = "application/json")

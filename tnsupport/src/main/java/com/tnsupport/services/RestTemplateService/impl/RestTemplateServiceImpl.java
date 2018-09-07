@@ -57,6 +57,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
 		exactURI.append("/performers");
+		log.info("RestTemplateServiceImpl URI = ", exactURI.toString());
 		ResponseEntity<List<Performer>> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Performer>>() {
 				});
@@ -66,6 +67,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		Attachment attachment = new Attachment("square");
 		attList.setAttachment(attachment);
 		for (int i = mainService.getVisitedCount(innerDto); i < performers.size(); i++) {
+			log.info("i = ", i);
 			dto.addElement(attList, attachment, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
 					performers.get(i).getPosition(), "web_url", performers.get(i).getCompanyUrl(),
 					performers.get(i).getCompanyName());

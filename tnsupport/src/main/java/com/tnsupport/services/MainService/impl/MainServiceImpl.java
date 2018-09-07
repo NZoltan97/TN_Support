@@ -75,6 +75,7 @@ public class MainServiceImpl implements IMainService {
 		}
 	}
 	
+	//processing
 	public void setLikes(InnerDTO innerDto) {
 		SiteInfo siteInfo = siteDao.findBySiteId(innerDto.getSiteId());
 		switch (innerDto.getVisitedId()) {
