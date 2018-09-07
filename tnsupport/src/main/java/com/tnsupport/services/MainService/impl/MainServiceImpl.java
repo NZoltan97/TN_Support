@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.InnerDTO;
-import com.tnsupport.dtos.gallery.Attachment;
 import com.tnsupport.dtos.gallery.AttachmentList;
 import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
 import com.tnsupport.model.SiteInfo;
@@ -92,13 +91,11 @@ public class MainServiceImpl implements IMainService {
 
 	public ChatFuelGalleryDTO getLikedZones() {
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment("horizontal");
-		attList.setAttachment(attachment);
+		AttachmentList attList = new AttachmentList("horizontal");
 		List<Zone> zones = zoneDao.findAll();
 		for (int i = 0; i < zones.size(); i++) {
 			if (zones.get(i).isLiked() == true) {
-				dto.addElement(attList, attachment, zones.get(i).getName(),
+				dto.addElement(attList, zones.get(i).getName(),
 						"http://chatbot.synapps.hu/tn_chatbot_zones.png", zones.get(i).getAddress(), "web_url",
 						"https://ideathon.ticketninja.io/sessions/" + zones.get(i).getZoneId(), "Megnézem");
 			}

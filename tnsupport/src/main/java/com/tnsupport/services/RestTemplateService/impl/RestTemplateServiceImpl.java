@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
-import com.tnsupport.dtos.gallery.Attachment;
 import com.tnsupport.dtos.gallery.AttachmentList;
 import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
 import com.tnsupport.model.Location;
@@ -67,12 +66,10 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				});
 		List<Performer> performers = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment("square");
-		attList.setAttachment(attachment);
+		AttachmentList attList = new AttachmentList("square");
 
 		for (int i = (mainService.getVisitedCount(innerDto)); i < performers.size(); i++) {
-			dto.addElement(attList, attachment, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
+			dto.addElement(attList, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
 					performers.get(i).getPosition(), "web_url", performers.get(i).getCompanyUrl(),
 					performers.get(i).getCompanyName());
 			if ((i+1) % 5 == 0) {
@@ -114,11 +111,10 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		}
 		//Mainservice
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment("horizontal");
-		attList.setAttachment(attachment);
+		AttachmentList attList = new AttachmentList("horizontal");
+
 		for (int i = mainService.getVisitedCount(innerDto); i < zones.length; i++) {
-			dto.addElement(attList, attachment, zones[i].getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
+			dto.addElement(attList, zones[i].getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
 					zones[i].getAddress(), "web_url",
 					"https://ideathon.ticketninja.io/sessions/" + zones[i].getZoneId(), "Megnézem");
 			zoneDao.save(zones[i]);
@@ -155,12 +151,10 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				});
 		List<Ticket> tickets = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment("horizontal");
-		attList.setAttachment(attachment);
+		AttachmentList attList = new AttachmentList("horizontal");
 
 		for (int i = mainService.getVisitedCount(innerDto); i < tickets.size(); i++) {
-			dto.addElement(attList, attachment, tickets.get(i).getName(),
+			dto.addElement(attList, tickets.get(i).getName(),
 					"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", tickets.get(i).getDescription(), "web_url",
 					"https://ideathon.ticketninja.io/#tickets", "Megnézem");
 			if (i % 5 == 0) {
@@ -193,12 +187,10 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				});
 		List<Location> locations = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment("horizontal");
-		attList.setAttachment(attachment);
+		AttachmentList attList = new AttachmentList("horizontal");
 
 		for (int i = mainService.getVisitedCount(innerDto); i < locations.size(); i++) {
-			dto.addElement(attList, attachment, locations.get(i).getName(), "http://chatbot.synapps.hu/ninja_logo.png",
+			dto.addElement(attList, locations.get(i).getName(), "http://chatbot.synapps.hu/ninja_logo.png",
 					locations.get(i).getDescription(), "web_url",
 					"https://www.google.hu/maps/dir//" + locations.get(i).getName().replace(" ", "+"),
 					"Útvonaltervezés");
