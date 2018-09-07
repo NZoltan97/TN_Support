@@ -1,5 +1,7 @@
 package com.tnsupport.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,18 +15,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 @Table (name = "performers")
-public class Performer {
+public class Performer implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "auto_id")
 	private long auto_id;
 	
 	@JsonProperty("id")
-	@Column(name = "performerID")
-	private long performerID;
+	@Column(name = "performerId")
+	private long performerId;
 	
 	@Column(name = "name")
 	private String name;
