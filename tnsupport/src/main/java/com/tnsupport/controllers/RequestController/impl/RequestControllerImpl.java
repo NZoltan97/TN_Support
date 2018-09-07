@@ -33,6 +33,13 @@ public class RequestControllerImpl implements IRequestController {
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return mainService.saveSite(innerDto);
 	}
+	
+	@RequestMapping(value = "/valami", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> getSuck(@RequestParam("siteId") String siteId){
+		AttributeDTO attDto=new AttributeDTO();
+		attDto.addAttribute(1);
+		return new ResponseEntity<AttributeDTO>(attDto,HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> getSiteId(@RequestParam("siteId") String siteId) {

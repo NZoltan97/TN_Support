@@ -15,5 +15,16 @@ public class InnerDTO {
 	private String siteAddress;
 	
 	private String currency;
-		
+	
+	private int visitedPerfCount;
+	
+	private int visitedZoneCount;
+
+	private int visitedLocationCount;
+	
+	private int visitedTicketCount;
+	
+	private int visitedId;
+
+
 }

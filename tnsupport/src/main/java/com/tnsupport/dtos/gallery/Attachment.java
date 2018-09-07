@@ -7,9 +7,9 @@ public class Attachment {
 	private String type;
 	private Payload payload;
 	
-	public Attachment() {
+	public Attachment(String imageRatio) {
 		this.type = "template";
-		this.payload = new Payload();
+		this.payload = new Payload(imageRatio);
 	}
 	
 }

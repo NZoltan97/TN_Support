@@ -11,9 +11,9 @@ public class Payload {
 	private String image_aspect_ratio;
 	private ArrayList<Element> elements;
 	
-	public Payload() {
+	public Payload(String imageRatio) {
 		this.template_type = "generic";
-		this.image_aspect_ratio = "horizontal";
+		this.image_aspect_ratio = imageRatio;
 		elements = new ArrayList<Element>();
 				
 	}

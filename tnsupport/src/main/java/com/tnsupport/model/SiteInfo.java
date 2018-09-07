@@ -1,6 +1,7 @@
 package com.tnsupport.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 @Table(name = "sites")
 public class SiteInfo implements Serializable {
 
@@ -29,14 +31,38 @@ public class SiteInfo implements Serializable {
 	@JsonProperty("id")
 	@Column(name = "siteId")
 	private long siteId;
-	
+
 	@Column(name = "siteName")
 	private String siteName;
-	
+
 	@Column(name = "siteAddress")
 	private String siteAddress;
-	
+
 	@Column(name = "currency")
 	private String currency;
+
+	@Column(name = "visitedPerfCount")
+	private int visitedPerfCount;
+
+	@Column(name = "likedPerfId")
+	private ArrayList<Long> likedPerfId;
+
+	@Column(name = "visitedZoneCount")
+	private int visitedZoneCount;
+
+	@Column(name = "likedZoneId")
+	private ArrayList<Long> likedZoneId;
+
+	@Column(name = "visitedLocationCount")
+	private int visitedLocationCount;
+
+	@Column(name = "likedLocationId")
+	private ArrayList<Long> likedLocationId;
 	
+	@Column(name = "visitedTicketCount")
+	private int visitedTicketCount;
+	
+	@Column(name = "likedTicketId")
+	private ArrayList<Long> likedTicketId;
+
 }

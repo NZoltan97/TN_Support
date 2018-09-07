@@ -2,6 +2,7 @@ package com.tnsupport.services.RestTemplateService.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,6 +21,7 @@ import com.tnsupport.model.Performer;
 import com.tnsupport.model.SiteInfo;
 import com.tnsupport.model.Ticket;
 import com.tnsupport.model.Zone;
+import com.tnsupport.services.MainService.impl.MainServiceImpl;
 import com.tnsupport.services.RestTemplateService.IRestTemplateService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 public class RestTemplateServiceImpl implements IRestTemplateService {
 
 	final String URI = "https://api.ticketninja.io/api/v1/landing/";
+	@Autowired
+	public MainServiceImpl mainService;
 
 	RestTemplate restTemplate = new RestTemplate();
 
@@ -48,11 +52,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 
 	@Cacheable("performers")
 	public ChatFuelGalleryDTO getPerformers(InnerDTO innerDto) {
-		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment();
-		attList.setAttachment(attachment);
-
+		innerDto.setVisitedId(1);
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -61,10 +61,32 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 				new ParameterizedTypeReference<List<Performer>>() {
 				});
 		List<Performer> performers = response.getBody();
-		for (Performer performer : performers) {
-			dto.addElement(attList, attachment, performer.getName(), performer.getProfilePicBase64(),
-					performer.getPosition(), "web_url", performer.getCompanyUrl(), performer.getCompanyName());
+		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		AttachmentList attList = new AttachmentList();
+		Attachment attachment = new Attachment("square");
+		attList.setAttachment(attachment);
+		for (int i = mainService.getVisitedCount(innerDto); i < performers.size(); i++) {
+			dto.addElement(attList, attachment, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
+					performers.get(i).getPosition(), "web_url", performers.get(i).getCompanyUrl(),
+					performers.get(i).getCompanyName());
+			if ((i+1) % 5 == 0) {
+				innerDto.setVisitedPerfCount(i + 1);
+				mainService.setVisitedCount(innerDto);
+				break;
+			}
 		}
+
+		// int i=0;
+		// for (Performer performer : performers) {
+		// dto.addElement(attList, attachment, performer.getName(),
+		// performer.getProfilePicBase64(),
+		// performer.getPosition(), "web_url", performer.getCompanyUrl(),
+		// performer.getCompanyName());
+		// i++;
+		// if(i==4) {
+		// break;
+		// }
+		// }
 
 		dto.getMessages().add(attList);
 		return dto;
@@ -73,11 +95,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 	// programok
 	@Cacheable("zones")
 	public ChatFuelGalleryDTO getZones(InnerDTO innerDto) {
-		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
-		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment();
-		attList.setAttachment(attachment);
-
+		innerDto.setVisitedId(2);
 		StringBuilder exactURI = new StringBuilder();
 		exactURI.append(URI);
 		exactURI.append(innerDto.getSiteId());
@@ -85,20 +103,27 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ResponseEntity<Zone[]> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				Zone[].class);
 		Zone[] zones = response.getBody();
-		for (Zone zone : zones) {
-			// List<ZoneGroup> zoneGroup = zone.getZoneGroups();
-			// kell -e ide egyaltalan button??
-			dto.addElement(attList, attachment, zone.getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
-					zone.getAddress(), "web_url", "https://ideathon.ticketninja.io/sessions/" + zone.getZoneID(),
-					"Megnézem");
-			// for (ZoneGroup zgroup: zoneGroup) {
-			// chatfuelDto.addMessages(zgroup.getZoneGroupType());
-			// chatfuelDto.addMessages(Long.toString(zgroup.getZoneId()));
-			// chatfuelDto.addMessages(zgroup.getZoneName());
-			// }
-
-			// chatfuelDto.addMessages(Boolean.toString(zone.isHighlighted()));
+		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		AttachmentList attList = new AttachmentList();
+		Attachment attachment = new Attachment("horizontal");
+		attList.setAttachment(attachment);
+		for (int i = mainService.getVisitedCount(innerDto); i < zones.length; i++) {
+			dto.addElement(attList, attachment, zones[i].getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
+					zones[i].getAddress(), "web_url",
+					"https://ideathon.ticketninja.io/sessions/" + zones[i].getZoneID(), "Megnézem");
+			if (i % 5 == 0) {
+				innerDto.setVisitedZoneCount(i + 1);
+				mainService.setVisitedCount(innerDto);
+				break;
+			}
 		}
+		// for (Zone zone : zones) {
+		// dto.addElement(attList, attachment, zone.getName(),
+		// "http://chatbot.synapps.hu/tn_chatbot_zones.png",
+		// zone.getAddress(), "web_url", "https://ideathon.ticketninja.io/sessions/" +
+		// zone.getZoneID(),
+		// "Megnézem");
+		// }
 
 		dto.getMessages().add(attList);
 		return dto;
@@ -120,14 +145,27 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		List<Ticket> tickets = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment();
+		Attachment attachment = new Attachment("horizontal");
 		attList.setAttachment(attachment);
 
-		for (Ticket ticket : tickets) {
-
-			dto.addElement(attList, attachment, ticket.getName(), "http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png",
-					ticket.getDescription(), "web_url", "https://ideathon.ticketninja.io/#tickets", "Megnézem");
+		for (int i = mainService.getVisitedCount(innerDto); i < tickets.size(); i++) {
+			dto.addElement(attList, attachment, tickets.get(i).getName(),
+					"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", tickets.get(i).getDescription(), "web_url",
+					"https://ideathon.ticketninja.io/#tickets", "Megnézem");
+			if (i % 5 == 0) {
+				innerDto.setVisitedTicketCount(i + 1);
+				mainService.setVisitedCount(innerDto);
+				break;
+			}
 		}
+
+		// for (Ticket ticket : tickets) {
+		//
+		// dto.addElement(attList, attachment, ticket.getName(),
+		// "http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png",
+		// ticket.getDescription(), "web_url",
+		// "https://ideathon.ticketninja.io/#tickets", "Megnézem");
+		// }
 
 		dto.getMessages().add(attList);
 		return dto;
@@ -145,14 +183,27 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		List<Location> locations = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList();
-		Attachment attachment = new Attachment();
+		Attachment attachment = new Attachment("horizontal");
 		attList.setAttachment(attachment);
 
-		for (Location location : locations) {
-			dto.addElement(attList, attachment, location.getName(), "http://chatbot.synapps.hu/ninja_logo.png",
-					location.getDescription(), "web_url",
-					"https://www.google.hu/maps/dir//" + location.getName().replace(" ", "+"), "Útvonaltervezés");
+		for (int i = mainService.getVisitedCount(innerDto); i < locations.size(); i++) {
+			dto.addElement(attList, attachment, locations.get(i).getName(), "http://chatbot.synapps.hu/ninja_logo.png",
+					locations.get(i).getDescription(), "web_url",
+					"https://www.google.hu/maps/dir//" + locations.get(i).getName().replace(" ", "+"),
+					"Útvonaltervezés");
+			if (i % 5 == 0) {
+				innerDto.setVisitedLocationCount(i + 1);
+				mainService.setVisitedCount(innerDto);
+				break;
+			}
 		}
+		// for (Location location : locations) {
+		// dto.addElement(attList, attachment, location.getName(),
+		// "http://chatbot.synapps.hu/ninja_logo.png",
+		// location.getDescription(), "web_url",
+		// "https://www.google.hu/maps/dir//" + location.getName().replace(" ", "+"),
+		// "Útvonaltervezés");
+		// }
 
 		dto.getMessages().add(attList);
 		return dto;

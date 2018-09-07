@@ -9,4 +9,5 @@ import com.tnsupport.model.SiteInfo;
 @Transactional
 public interface ISiteInfoDAO extends JpaRepository<SiteInfo, Long> {
 
+	public SiteInfo findBySiteId(long siteId);
 }
