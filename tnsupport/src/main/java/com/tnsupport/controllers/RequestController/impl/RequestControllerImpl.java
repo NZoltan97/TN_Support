@@ -51,7 +51,6 @@ public class RequestControllerImpl implements IRequestController {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return templateService.getSiteInfo(innerDto);
-
 	}
 
 	@RequestMapping(value = "/performerInfo", method = RequestMethod.GET, produces = "application/json")
@@ -80,6 +79,17 @@ public class RequestControllerImpl implements IRequestController {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
 		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getLocations(innerDto),HttpStatus.OK);
+	}
+
+//	@RequestMapping(value = "/like", method = RequestMethod.GET, produces = "application/json")
+//	public ResponseEntity<AttributeDTO> setLikedZone() {
+//		mainService.setLikedZone();
+//		return new ResponseEntity<ChatFuelGalleryDTO>(,HttpStatus.OK);
+//	}
+	
+	@RequestMapping(value = "/likedZones", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ChatFuelGalleryDTO> getLikedZones() {
+		return new ResponseEntity<ChatFuelGalleryDTO>(mainService.getLikedZones(),HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/clearCache", method = RequestMethod.GET, produces = "application/json")

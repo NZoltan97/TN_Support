@@ -1,30 +1,35 @@
 package com.tnsupport.model;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tnsupport.model.subtypes.ZoneGroup;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @NoArgsConstructor
 @Table(name = "zones")
-public class Zone {
+public class Zone implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "auto_id")
 	private long auto_id;
 
 	@JsonProperty("id")
-	@Column(name = "zoneID")
-	private long zoneID;
+	@Column(name = "zoneId")
+	private long zoneId;
 
 	@Column(name = "name")
 	private String name;
@@ -44,9 +49,12 @@ public class Zone {
 	@Column(name = "locationId")
 	private long locationId;
 
-	@Column(name = "zoneGroups")
-	private List<ZoneGroup> zoneGroups;
+//	@Column(name = "zoneGroups")
+//	private List<ZoneGroup> zoneGroups;
 
 	@Column(name = "isHighlighted")
 	private boolean isHighlighted;
+	
+	@Column(name = "isLiked")
+	private boolean isLiked;
 }

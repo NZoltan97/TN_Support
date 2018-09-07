@@ -11,8 +11,13 @@ import org.springframework.stereotype.Service;
 
 import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.InnerDTO;
+import com.tnsupport.dtos.gallery.Attachment;
+import com.tnsupport.dtos.gallery.AttachmentList;
+import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
 import com.tnsupport.model.SiteInfo;
+import com.tnsupport.model.Zone;
 import com.tnsupport.repository.ISiteInfoDAO;
+import com.tnsupport.repository.IZoneDAO;
 import com.tnsupport.services.MainService.IMainService;
 
 @Service
@@ -23,6 +28,9 @@ public class MainServiceImpl implements IMainService {
 
 	@Autowired
 	private ISiteInfoDAO siteDao;
+
+	@Autowired
+	private IZoneDAO zoneDao;
 
 	private AttributeDTO attDto = new AttributeDTO();
 
@@ -74,39 +82,26 @@ public class MainServiceImpl implements IMainService {
 			return 0;
 		}
 	}
-	
-	public void setLikes(InnerDTO innerDto) {
-		SiteInfo siteInfo = siteDao.findBySiteId(innerDto.getSiteId());
-		switch (innerDto.getVisitedId()) {
-		case 1:
-			siteInfo.setVisitedPerfCount(innerDto.getVisitedPerfCount());
-			break;
-		case 2:
-			siteInfo.setVisitedZoneCount(innerDto.getVisitedZoneCount());
-			break;
-		case 3:
-			siteInfo.setVisitedLocationCount(innerDto.getVisitedLocationCount());
-			break;
-		case 4:
-			siteInfo.setVisitedTicketCount(innerDto.getVisitedTicketCount());
-			break;
-		}
-		siteDao.save(siteInfo);
+	//Processing
+	public void setLikedZone(InnerDTO innerDto) {
+		Zone zone=zoneDao.findByZoneId(innerDto.getZoneId());
+		zone.setLiked(true);
+		zoneDao.save(zone);
 	}
 
-	public int getLikes(InnerDTO innerDto) {
-		switch (innerDto.getVisitedId()) {
-		case 1:
-			return siteDao.findBySiteId(innerDto.getSiteId()).getVisitedPerfCount();
-		case 2:
-			return siteDao.findBySiteId(innerDto.getSiteId()).getVisitedZoneCount();
-		case 3:
-			return siteDao.findBySiteId(innerDto.getSiteId()).getVisitedLocationCount();
-		case 4:
-			return siteDao.findBySiteId(innerDto.getSiteId()).getVisitedTicketCount();
-		default:
-			// Error code?
-			return 0;
+	public ChatFuelGalleryDTO getLikedZones() {
+		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
+		AttachmentList attList = new AttachmentList();
+		Attachment attachment = new Attachment("horizontal");
+		attList.setAttachment(attachment);
+		List<Zone> zones=zoneDao.findAll();
+		for(int i=0;i<zones.size();i++) {
+			if(zones.get(i).isLiked()==true) {
+				dto.addElement(attList, attachment, zones.get(i).getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
+						zones.get(i).getAddress(), "web_url",
+						"https://ideathon.ticketninja.io/sessions/" + zones.get(i).getZoneId(), "Megnézem");
+			}
 		}
+		return dto;
 	}
 }
