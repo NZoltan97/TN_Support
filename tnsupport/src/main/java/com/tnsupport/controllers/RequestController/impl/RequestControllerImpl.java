@@ -14,7 +14,7 @@ import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.ChatFuelDTO;
 import com.tnsupport.dtos.InnerDTO;
 import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
-import com.tnsupport.services.MainService.impl.MainServiceImpl;
+import com.tnsupport.repository.MainDAO.impl.MainDAOImpl;
 import com.tnsupport.services.RestTemplateService.impl.RestTemplateServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RequestControllerImpl implements IRequestController {
 
 	@Autowired
-	MainServiceImpl mainService;
+	MainDAOImpl mainDao;
 
 	@Autowired
 	RestTemplateServiceImpl templateService;
@@ -34,7 +34,7 @@ public class RequestControllerImpl implements IRequestController {
 	public ResponseEntity<AttributeDTO> sendSiteId(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return mainService.saveSite(innerDto);
+		return mainDao.saveSite(innerDto);
 	}
 
 	@RequestMapping(value = "/valami", method = RequestMethod.GET, produces = "application/json")
@@ -46,7 +46,7 @@ public class RequestControllerImpl implements IRequestController {
 
 	@RequestMapping(value = "/siteId", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> getSiteId(@RequestParam("siteId") String siteId) {
-		return mainService.getSiteId();
+		return mainDao.getSiteId();
 	}
 
 	@RequestMapping(value = "/siteInfo", method = RequestMethod.GET, produces = "application/json")
@@ -93,7 +93,7 @@ public class RequestControllerImpl implements IRequestController {
 	
 	@RequestMapping(value = "/likedZones", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<ChatFuelGalleryDTO> getLikedZones() {
-		return new ResponseEntity<ChatFuelGalleryDTO>(mainService.getLikedZones(),HttpStatus.OK);
+		return new ResponseEntity<ChatFuelGalleryDTO>(mainDao.getLikedZones(),HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/clearCache", method = RequestMethod.GET, produces = "application/json")

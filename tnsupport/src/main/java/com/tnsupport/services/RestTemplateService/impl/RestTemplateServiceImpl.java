@@ -21,7 +21,7 @@ import com.tnsupport.model.SiteInfo;
 import com.tnsupport.model.Ticket;
 import com.tnsupport.model.Zone;
 import com.tnsupport.repository.IZoneDAO;
-import com.tnsupport.services.MainService.impl.MainServiceImpl;
+import com.tnsupport.repository.MainDAO.impl.MainDAOImpl;
 import com.tnsupport.services.RestTemplateService.IRestTemplateService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 
 	final String URI = "https://api.ticketninja.io/api/v1/landing/";
 	@Autowired
-	public MainServiceImpl mainService;
+	public MainDAOImpl mainDao;
 	
 	@Autowired
 	public IZoneDAO zoneDao;
@@ -68,13 +68,13 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList("square");
 
-		for (int i = (mainService.getVisitedCount(innerDto)); i < performers.size(); i++) {
+		for (int i = (mainDao.getVisitedCount(innerDto)); i < performers.size(); i++) {
 			dto.addElement(attList, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
 					performers.get(i).getPosition(), "web_url", performers.get(i).getCompanyUrl(),
 					performers.get(i).getCompanyName());
 			if ((i+1) % 5 == 0) {
 				innerDto.setVisitedPerfCount(i + 1);
-				mainService.setVisitedCount(innerDto);
+				mainDao.setVisitedCount(innerDto);
 				break;
 			}
 		}
@@ -113,14 +113,14 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList("horizontal");
 
-		for (int i = mainService.getVisitedCount(innerDto); i < zones.length; i++) {
+		for (int i = mainDao.getVisitedCount(innerDto); i < zones.length; i++) {
 			dto.addElement(attList, zones[i].getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
 					zones[i].getAddress(), "web_url",
 					"https://ideathon.ticketninja.io/sessions/" + zones[i].getZoneId(), "Megnézem");
 			zoneDao.save(zones[i]);
 			if (i % 5 == 0) {
 				innerDto.setVisitedZoneCount(i + 1);
-				mainService.setVisitedCount(innerDto);
+				mainDao.setVisitedCount(innerDto);
 				break;
 			}
 		}
@@ -153,13 +153,13 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList("horizontal");
 
-		for (int i = mainService.getVisitedCount(innerDto); i < tickets.size(); i++) {
+		for (int i = mainDao.getVisitedCount(innerDto); i < tickets.size(); i++) {
 			dto.addElement(attList, tickets.get(i).getName(),
 					"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", tickets.get(i).getDescription(), "web_url",
 					"https://ideathon.ticketninja.io/#tickets", "Megnézem");
 			if (i % 5 == 0) {
 				innerDto.setVisitedTicketCount(i + 1);
-				mainService.setVisitedCount(innerDto);
+				mainDao.setVisitedCount(innerDto);
 				break;
 			}
 		}
@@ -189,14 +189,15 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList("horizontal");
 
-		for (int i = mainService.getVisitedCount(innerDto); i < locations.size(); i++) {
+		for (int i = mainDao.getVisitedCount(innerDto); i < locations.size(); i++) {
 			dto.addElement(attList, locations.get(i).getName(), "http://chatbot.synapps.hu/ninja_logo.png",
+
 					locations.get(i).getDescription(), "web_url",
 					"https://www.google.hu/maps/dir//" + locations.get(i).getName().replace(" ", "+"),
 					"Útvonaltervezés");
 			if (i % 5 == 0) {
 				innerDto.setVisitedLocationCount(i + 1);
-				mainService.setVisitedCount(innerDto);
+				mainDao.setVisitedCount(innerDto);
 				break;
 			}
 		}

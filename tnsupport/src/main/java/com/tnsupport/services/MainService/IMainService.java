@@ -1,5 +1,5 @@
 package com.tnsupport.services.MainService;
 
-public interface IMainService {
+public class IMainService {
 
 }
