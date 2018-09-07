@@ -21,6 +21,7 @@ import com.tnsupport.model.Performer;
 import com.tnsupport.model.SiteInfo;
 import com.tnsupport.model.Ticket;
 import com.tnsupport.model.Zone;
+import com.tnsupport.repository.IZoneDAO;
 import com.tnsupport.services.MainService.impl.MainServiceImpl;
 import com.tnsupport.services.RestTemplateService.IRestTemplateService;
 
@@ -33,6 +34,9 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 	final String URI = "https://api.ticketninja.io/api/v1/landing/";
 	@Autowired
 	public MainServiceImpl mainService;
+	
+	@Autowired
+	public IZoneDAO zoneDao;
 
 	RestTemplate restTemplate = new RestTemplate();
 
@@ -66,8 +70,8 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		AttachmentList attList = new AttachmentList();
 		Attachment attachment = new Attachment("square");
 		attList.setAttachment(attachment);
-		for (int i = mainService.getVisitedCount(innerDto); i < performers.size(); i++) {
-			log.info("i = ", i);
+
+		for (int i = (mainService.getVisitedCount(innerDto)); i < performers.size(); i++) {
 			dto.addElement(attList, attachment, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
 					performers.get(i).getPosition(), "web_url", performers.get(i).getCompanyUrl(),
 					performers.get(i).getCompanyName());
@@ -105,6 +109,10 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		ResponseEntity<Zone[]> response = restTemplate.exchange(exactURI.toString(), HttpMethod.GET, null,
 				Zone[].class);
 		Zone[] zones = response.getBody();
+		for(int i=0; i<zones.length;i++) {
+			zoneDao.save(zones[i]);
+		}
+		//Mainservice
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList();
 		Attachment attachment = new Attachment("horizontal");
@@ -112,7 +120,8 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		for (int i = mainService.getVisitedCount(innerDto); i < zones.length; i++) {
 			dto.addElement(attList, attachment, zones[i].getName(), "http://chatbot.synapps.hu/tn_chatbot_zones.png",
 					zones[i].getAddress(), "web_url",
-					"https://ideathon.ticketninja.io/sessions/" + zones[i].getZoneID(), "Megnézem");
+					"https://ideathon.ticketninja.io/sessions/" + zones[i].getZoneId(), "Megnézem");
+			zoneDao.save(zones[i]);
 			if (i % 5 == 0) {
 				innerDto.setVisitedZoneCount(i + 1);
 				mainService.setVisitedCount(innerDto);

@@ -25,6 +25,8 @@ public class InnerDTO {
 	private int visitedTicketCount;
 	
 	private int visitedId;
+	
+	private long zoneId;
 
 
 }
