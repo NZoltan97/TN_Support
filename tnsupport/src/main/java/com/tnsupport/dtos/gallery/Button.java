@@ -6,12 +6,12 @@ import lombok.Data;
 public class Button {
 
 	private String type;
-	private String block_names;
+	private String url;
 	private String title;
 	
 	public Button(String type, String url, String title) {
 		this.type = type;
-		this.block_names = url;
+		this.url = url;
 		this.title = title;
 	}
 }

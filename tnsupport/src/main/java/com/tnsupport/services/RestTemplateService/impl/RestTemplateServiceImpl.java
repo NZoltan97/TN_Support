@@ -70,7 +70,7 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 
 		for (int i = (mainDao.getVisitedCount(innerDto)); i < performers.size(); i++) {
 			dto.addElement(attList, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
-					performers.get(i).getPosition(), "show_block", /*performers.get(i).getCompanyUrl()*/ "[First]",
+					performers.get(i).getPosition(), "web_url", performers.get(i).getCompanyUrl(),
 					performers.get(i).getCompanyName());
 			if ((i+1) % 5 == 0) {
 				innerDto.setVisitedPerfCount(i + 1);

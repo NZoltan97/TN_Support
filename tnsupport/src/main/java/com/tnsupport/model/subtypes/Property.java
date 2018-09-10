@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
- @Data @NoArgsConstructor
+@Data @NoArgsConstructor
 public class Property {
 
 	private Long id;

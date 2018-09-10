@@ -49,22 +49,22 @@ public class Ticket {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "properties")
-	private List<Property> properties;
-	
-	@ElementCollection
-	@CollectionTable(
-			name = "zonesList",
-			joinColumns=@JoinColumn(name ="id", referencedColumnName="id")
-			)
-	@Column(name = "zones")
-	private List<Zone> zones= new ArrayList<Zone>();
-	
-	@ElementCollection
-	@CollectionTable(
-			name = "consumablesList",
-			joinColumns=@JoinColumn(name ="id", referencedColumnName="id")
-			)
-	@Column(name = "consumables")
-	private List<Consumable> consumables = new ArrayList<Consumable>();
+//	@Column(name = "properties")
+//	private List<Property> properties;
+//	
+//	@ElementCollection
+//	@CollectionTable(
+//			name = "zonesList",
+//			joinColumns=@JoinColumn(name ="id", referencedColumnName="id")
+//			)
+//	@Column(name = "zones")
+//	private List<Zone> zones= new ArrayList<Zone>();
+//	
+//	@ElementCollection
+//	@CollectionTable(
+//			name = "consumablesList",
+//			joinColumns=@JoinColumn(name ="id", referencedColumnName="id")
+//			)
+//	@Column(name = "consumables")
+//	private List<Consumable> consumables = new ArrayList<Consumable>();
 }
