@@ -72,10 +72,10 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	@RequestMapping(value = "/ticketInfo", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ChatFuelGalleryDTO> getTicketInfo(@RequestParam("siteId") String siteId) {
+	public /*ResponseEntity<ChatFuelGalleryDTO>*/ void getTicketInfo(@RequestParam("siteId") String siteId) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setSiteId(Long.parseLong(siteId));
-		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getTickets(innerDto), HttpStatus.OK);
+//		return new ResponseEntity<ChatFuelGalleryDTO>(templateService.getTickets(innerDto), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/locationInfo", method = RequestMethod.GET, produces = "application/json")

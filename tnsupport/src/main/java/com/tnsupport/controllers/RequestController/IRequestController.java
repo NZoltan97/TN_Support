@@ -13,6 +13,6 @@ public interface IRequestController {
 	public ChatFuelDTO getSiteInfo(@RequestParam ("siteId") String siteId);
 	public ResponseEntity<ChatFuelGalleryDTO> getPerformerInfo(@RequestParam ("siteId") String siteId);
 	public ResponseEntity<ChatFuelGalleryDTO> getZoneInfo(@RequestParam ("siteId") String siteId);
-	public ResponseEntity<ChatFuelGalleryDTO> getTicketInfo(@RequestParam ("siteId") String siteId);
+	public /*ResponseEntity<ChatFuelGalleryDTO>*/ void getTicketInfo(@RequestParam ("siteId") String siteId);
 	public ResponseEntity<ChatFuelGalleryDTO> getLocationInfo(@RequestParam ("siteId") String siteId);
 }

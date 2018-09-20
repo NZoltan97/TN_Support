@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.tnsupport.dtos.AttributeDTO;
 import com.tnsupport.dtos.InnerDTO;
@@ -16,10 +16,13 @@ import com.tnsupport.dtos.gallery.ChatFuelGalleryDTO;
 import com.tnsupport.model.SiteInfo;
 import com.tnsupport.model.Zone;
 import com.tnsupport.repository.ISiteInfoDAO;
+import com.tnsupport.repository.ITicketDAO;
 import com.tnsupport.repository.IZoneDAO;
 import com.tnsupport.repository.MainDAO.IMainDAO;
 
-@Service
+import lombok.Data;
+
+@Component @Data
 public class MainDAOImpl implements IMainDAO {
 
 	// private static final Logger LOGGER =
@@ -30,6 +33,9 @@ public class MainDAOImpl implements IMainDAO {
 
 	@Autowired
 	private IZoneDAO zoneDao;
+	
+	@Autowired
+	private ITicketDAO ticketDao;
 
 	private AttributeDTO attDto = new AttributeDTO();
 

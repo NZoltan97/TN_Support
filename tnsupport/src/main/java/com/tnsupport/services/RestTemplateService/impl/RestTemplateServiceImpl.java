@@ -70,8 +70,8 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 
 		for (int i = (mainDao.getVisitedCount(innerDto)); i < performers.size(); i++) {
 			dto.addElement(attList, performers.get(i).getName(), performers.get(i).getProfilePicBase64(),
-					performers.get(i).getPosition(), "web_url", performers.get(i).getCompanyUrl(),
-					performers.get(i).getCompanyName());
+					performers.get(i).getPosition(), "show_block", performers.get(i).getCompanyUrl(),
+					/*performers.get(i).getCompanyName()*/ "[First]");
 			if ((i+1) % 5 == 0) {
 				innerDto.setVisitedPerfCount(i + 1);
 				mainDao.setVisitedCount(innerDto);
@@ -152,7 +152,9 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		List<Ticket> tickets = response.getBody();
 		ChatFuelGalleryDTO dto = new ChatFuelGalleryDTO();
 		AttachmentList attList = new AttachmentList("horizontal");
-
+//		log.info("Tickets: {} ", tickets.get(0).getConsumables().toString());
+		mainDao.getTicketDao().saveAll(tickets);
+		
 		for (int i = mainDao.getVisitedCount(innerDto); i < tickets.size(); i++) {
 			dto.addElement(attList, tickets.get(i).getName(),
 					"http://chatbot.synapps.hu/tn_chatbot_ticket_pic.png", tickets.get(i).getDescription(), "web_url",
@@ -171,7 +173,6 @@ public class RestTemplateServiceImpl implements IRestTemplateService {
 		// ticket.getDescription(), "web_url",
 		// "https://ideathon.ticketninja.io/#tickets", "Megnézem");
 		// }
-
 		dto.getMessages().add(attList);
 		return dto;
 	}

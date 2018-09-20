@@ -1,0 +1,1 @@
+docker run --name TNDB -e POSTGRES_DB=SupportDB -e POSTGRES_USER=UniTeam -e POSTGRES_PASSWORD=The_Crew4 -v postgres-data:/var/lib/postgresql/data --rm -d -p 5432:5432 postgres:9.6-alpine

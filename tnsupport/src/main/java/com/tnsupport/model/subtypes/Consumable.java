@@ -1,18 +1,26 @@
 package com.tnsupport.model.subtypes;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.io.Serializable;
 
-@Getter @Setter @NoArgsConstructor
-public class Consumable {
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data @NoArgsConstructor
+public class Consumable implements Serializable{
 	
-	private Long id;
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	private Long consumableId;
+
 	private String name;
-	
+
 	private String description;
-	
+
 	private int maxCount;
 	
 }
